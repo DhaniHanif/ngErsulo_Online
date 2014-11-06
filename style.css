@@ -5,6 +5,9 @@ html,body{
 h1,p{
 	margin:5px 0 5px 0;
 }
+h2{
+	margin-top: 20px;
+}
 a{
 	color:#6388b9;
 	text-decoration:none;
@@ -22,7 +25,7 @@ a{
 }
 #login{
 	float:right;
-	width:580px;
+	width:610px;
 	padding:10px 10px 0 0;
 }
 #login table{
@@ -52,7 +55,7 @@ ul{
 }
 
 #content #wrapper #register{
-	width:400px;
+	width:440px;
 	float:right;
 }
 #content #wrapper #register{
