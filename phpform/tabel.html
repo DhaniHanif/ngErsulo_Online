@@ -16,6 +16,8 @@
         </style>
     </head>
     <body>
+        <input type=button value="Kembali" onClick="self.location='index.php'">
+        <p>Daftar Tabel Registrasi</p>      
         <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
         <script src="http://d3js.org/d3.v3.min.js"></script>
 
@@ -34,7 +36,7 @@
                         .data(function(d) { return d; }).enter()
                         .append("td")
                         .text(function(d) { return d; });
-            });
+            });   
         </script>
     </body>
 </html>
