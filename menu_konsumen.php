@@ -2,15 +2,15 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>ngErsulo Online | Buat Komplain</title>
+        <title>ngErsulo Online | Menu Konsumen</title>
         <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="src/rateit.css" rel="stylesheet" type="text/css">
+        <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
         <!-- Ionicons -->
         <link href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <!-- Morris chart -->
-        <link href="css/morris/morris.css" rel="stylesheet" type="text/css" />
         <!-- jvectormap -->
         <link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
         <!-- Date Picker -->
@@ -29,6 +29,17 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
+    <?php
+        session_start();
+        if(!isset($_SESSION['username'])) {
+        header('location:index.php'); }
+        else { $username = $_SESSION['username']; }
+        require_once("koneksi.php");
+
+        $query = $pdo->prepare("SELECT * FROM user WHERE username = '$username'");
+        $query->execute();
+        $hasil =  $query->fetch();
+    ?>
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
@@ -51,95 +62,38 @@
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope"></i>
-                                <span class="label label-success">4</span>
+                                
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 4 messages</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li><!-- start message -->
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="img/avatar3.png" class="img-circle" alt="User Image"/>
-                                                </div>
-                                                <h4>
-                                                    Support Team
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li><!-- end message -->
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">See All Messages</a></li>
-                            </ul>
+                            
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-warning"></i>
-                                <span class="label label-warning">10</span>
+                                
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 10 notifications</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-people info"></i> 5 new members joined today
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">View all</a></li>
-                            </ul>
+                            
                         </li>
                         <!-- Tasks: style can be found in dropdown.less -->
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-tasks"></i>
-                                <span class="label label-danger">9</span>
+                                
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 9 tasks</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Design some buttons
-                                                    <small class="pull-right">20%</small>
-                                                </h3>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">20% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li><!-- end task item -->
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="#">View all tasks</a>
-                                </li>
-                            </ul>
                         </li>
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span>Jane Doe <i class="caret"></i></span>
+                                <span><?php echo "$username";?> <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
                                     <img src="img/avatar3.png" class="img-circle" alt="User Image" />
                                     <p>
-                                        Jane Doe - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        <?php echo "$username - Konsumen";?>
+                                        <small>Member since Jan. 2015</small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -160,7 +114,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="index.html" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="index.php" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -180,7 +134,7 @@
                             <img src="img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
-                            <p>Hello, Jane</p>
+                            <p><?php echo "Selamat Datang, $username ";?></p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
@@ -197,8 +151,8 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li>
-                            <a href="menu_konsumen.html">
+                        <li class="active">
+                            <a href="menu_konsumen.php">
                                 <i class="fa fa-th"></i> <span>Menu Konsumen</span>
                             </a>
                         </li>
@@ -245,49 +199,157 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                    Buat Komplain
+                        Menu Konsumen
                     </h1>
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
-                                <div class="box-body">
-                                    <form action="#" method="post">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" name="judul" placeholder="Judul Komplain"/>
-                                        </div>
-                                        Pilih Kategori&nbsp;&nbsp;
-                                        <select class="pilih_option">
-                                          <option value="Pendidikan">Pendidikan</option>
-                                          <option value="Pemerintah">Pemerintah</option>
-                                          <option value="Masyarakat">Masyarakat</option>
-                                        </select>
-                                        Pilih Instansi&nbsp;&nbsp;
-                                        <select class="pilih_option">
-                                          <option value="udinus">Universitas Dian Nuswantoro</option>
-                                          <option value="polres">Polres Semarang Barat</option>
-                                          <option value="harpindo">PT. Harpindo Jaya</option>
-                                          <option value="pemkot">Pemerintah Kota Semarang</option>
-                                        </select>
-                                        <div class="radio_profil">
-                                            Tampilkan Secara&nbsp;&nbsp;
-                                            <input type="radio" value="pribadi"> Saya Pribadi &nbsp; &nbsp;
-                                            <input type="radio" value="anonim"> Anonim
-                                        </div>
-                                        <div>
-                                            <textarea class="textarea" placeholder="Tulis Komplain Anda" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                        </div>
-                                    </form>
+
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                    </div><!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-red">
+                                <div class="inner">
+                                    <h3>
+                                        +
+                                    </h3>
+                                    <p>
+                                        Buat Komplain
+                                    </p>
                                 </div>
-                                <div class="box-footer clearfix">
-                                    <button class="pull-right btn btn-default" id="send">Kirim <i class="fa fa-arrow-circle-right"></i></button>
+                                <div class="icon">
+                                    <i class="ion ion-clipboard"></i>
                                 </div>
+                                <a href="buat_komplain.php" class="small-box-footer">
+                                     Pilih <i class="fa fa-arrow-circle-right"></i>
+                                </a>
                             </div>
+                        </div><!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>
+                                        5
+                                    </h3>
+                                    <p>
+                                        Komplain Saya
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-alert"></i>
+                                </div>
+                                <a href="komplain_saya.html" class="small-box-footer">
+                                    Pilih <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div><!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>
+                                        2/5
+                                    </h3>
+                                    <p>
+                                        Tanggapan Instansi
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-checkmark-circled"></i>
+                                </div>
+                                <a href="tanggapan_instansi.html" class="small-box-footer">
+                                    Pilih <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div><!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>
+                                        150
+                                    </h3>
+                                    <p>
+                                        Daftar Instansi
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-home"></i>
+                                </div>
+                                <a href="daftar_instansi.html" class="small-box-footer">
+                                    Pilih <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                    </div><!-- /.row -->
+
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Left col -->
+                        <section class="col-lg-12 connectedSortable">                
+
+                            <!-- Complaint box -->
+                            <div class="box box-success">
+                                <div class="box-header">
+                                    <i class="fa fa-comments-o"></i>
+                                    <h3 class="box-title">Daftar Komplain</h3>
+                                </div>
+                                <div class="box-body chat" id="chat-box">
+                                    <!-- chat item -->
+                                    <div class="item">
+                                        <img src="img/avatar.png" alt="user image" class="online"/>
+                                        <p class="message">
+                                            <a href="contoh_komplain.html" class="buka_komplain">
+                                                <small class="pull-right"><button class="btn btn-primary btn-sm btn-flat">Open</button></small>
+                                                Irfan
+                                            </a>
+                                            </br>
+                                            Mahalnya Pembayaran SPP</br>
+                                            <b>Beri Rating</b>&nbsp;&nbsp;&nbsp;                  
+                                            <span class="rateit" data-rateit-value="4" data-rateit-ispreset="true" data-rateit-readonly="false"></span>
+                                            <script src="src/jquery.rateit.js" type="text/javascript"></script>
+                                        </p>
+                                    </div><!-- /.item -->
+                                    <!-- chat item -->
+                                    <div class="item">
+                                        <img src="img/avatar2.png" alt="user image" class="offline"/>
+                                        <p class="message">
+                                            <a href="#" class="name">
+                                                <small class="pull-right"><button class="btn btn-primary btn-sm btn-flat">Open</button></small>
+                                                Jane 
+                                            </a>
+                                            Kemacetan Yang Parah</br>
+                                            <b>Beri Rating</b>&nbsp;&nbsp;&nbsp;                                       
+                                            <span class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="false"></span>
+                                            <script src="src/jquery.rateit.js" type="text/javascript"></script>
+                                        </p>
+                                    </div><!-- /.item -->
+                                    <!-- chat item -->
+                                    <div class="item">
+                                        <img src="img/avatar3.png" alt="user image" class="offline"/>
+                                        <p class="message">
+                                            <a href="#" class="name">
+                                                <small class="pull-right"><button class="btn btn-primary btn-sm btn-flat">Open</button></small>
+                                                Susan
+                                            </a>
+                                            Banyaknya Premanisme Jalanan</br>
+                                            <b>Beri Rating</b>&nbsp;&nbsp;&nbsp;
+                                            <span class="rateit" data-rateit-value="1" data-rateit-ispreset="true" data-rateit-readonly="false"></span>
+                                            <script src="src/jquery.rateit.js" type="text/javascript"></script>
+                                        </p>
+                                    </div><!-- /.item -->
+                                </div><!-- /.chat -->
+                            </div><!-- /.box (chat box) -->                                                        
+                        </section><!-- /.Left col -->
+                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    </div><!-- /.row (main row) -->
+
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
-
-        <!-- add new calendar event modal -->
 
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -295,6 +357,7 @@
         <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
         <!-- Morris.js charts -->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="js/plugins/rating.js" type="text/javascript"></script>
         <!-- Sparkline -->
         <script src="js/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
         <!-- jvectormap -->
